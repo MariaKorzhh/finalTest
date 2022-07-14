@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Final Test</title>
+	<script type="text/javascript">
+		var positions = ["Junior QA engineer", "Middle QA engineer", "Porduct owner", "Senior QA engineer", "Middle developer", "Project manager", "Senior developer", "Junior developer"];
+        var names = new Array();
+
+        function getNames() {
+            // массив для имен от пользователя
+            var namesFromUser = new Array();
+
+            // заполнение массива
+            for (var i = 0; i < positions.length; i++) {
+                namesFromUser[i] = prompt('Введите имя: ');
+            }
+
+            // проверка массива 
+            for (var i = 0; i < namesFromUser.length; i++) {
+                if (namesFromUser[i] !== null && namesFromUser[i] !== '') {
+                    names[i] = namesFromUser[i];
+                } else {
+                    if (confirm('Вы ввели неправильные данные. Попробовать ещё раз?')) {
+                        getNames();
+                    } else {
+                        return;
+                    }
+                }
+            }
+        }
+
+        function createTeam() {
+            // массив для объектов-сотрудников
+            var teamOfWorkers = new Array();
+
+            // заполнение массива 
+            for (var i = 0; i < names.length; i++) {
+                    worker = {
+                    name: names[i],
+                    position: positions[i]
+                }
+                teamOfWorkers.push(worker);
+            }
+
+            // создание объекта team
+            team = {
+                workers: teamOfWorkers  
+            }
+        }
+
+        function setSalary() {
+            // функция для получения произвольного значения зарплаты в заданом промежутке
+            function getSalaryValue(N1, N2) {
+                return Math.floor(Math.random() * (N2 - N1) + N1);
+            }
+
+            // добавление сотрудникам свойства salary и его значения в зависимости от должности
+            for (var i = 0; i < positions.length; i++) {
+                if (team.workers[i].position.indexOf('Junior') == 0) {
+                    team.workers[i].salary = getSalaryValue(500, 1000);
+                } else if (team.workers[i].position.indexOf('Middle') == 0) {
+                    team.workers[i].salary = getSalaryValue(1500, 2000);
+                } else if (team.workers[i].position.indexOf('Senior') == 0) {
+                    team.workers[i].salary = getSalaryValue(2500, 3000);
+                } else {
+                    team.workers[i].salary = getSalaryValue(4000, 4500);
+                }
+            }
+        }
+
+        getNames();
+        createTeam();
+        setSalary();
+
+        // создание цикла для установки метода tellAboutYourSelf(); 
+        for (var i = 0; i < names.length; i++) {
+            team.workers[i].tellAboutYourSelf = function() {
+                console.log('Меня зовут ' + team.workers[i].name + ' и я - ' + team.workers[i].position + '. Я зарабатываю ' + team.workers[i].salary + '$.');
+            }
+            // вывод информации о сотруднике
+            team.workers[i].tellAboutYourSelf();
+        }
+        
+        // создание team.showTeam = function() {...};
+        team.showTeam = function() {
+            for (var i = 0; i < names.length; i++) {
+                console.log(team.workers[i].name + ' - ' + team.workers[i].position + '. Зарплата - ' + team.workers[i].salary + '$.');
+            }
+        }
+
+        team.showTeam();
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>
